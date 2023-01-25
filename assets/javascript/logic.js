@@ -1,8 +1,11 @@
-// Needed to create // -
+// TO-DO LIST
+/*
+- review list number in generateOptions()
 
+*/
 // - an array of user objects > to store user.initials and user.score at the end 
 // - an array of score 
-// - an array of initial 
+// - an array of initials 
 // ----'
 
 
@@ -13,10 +16,10 @@ let currentScore
 
 // --------------- Create elements that we will need -------------
 
-// For feedback after each question
-let rightWrongParagraph = document.createElement("p");
-let horizontalLine = document.createElement("hr");
-
+// For feedbackText after each question
+let feedbackText = document.createElement("p");
+let horizontalLine = document.createElement("hr"); 
+let list = document.createElement("ul");
 
 // --------------- Select Elements -------------------------------
 
@@ -29,10 +32,11 @@ let startScreen = document.getElementById("start-screen");
 let questionsDiv = document.getElementById("questions");
 let questionTitle = document.getElementById("question-title");
 let answerDiv = document.getElementById("choices");
-let answers = document.getElementsByClassName("choices");
+
+
 
 // --------------- Add content to Elements -----------------------
-rightWrongParagraph = "";
+feedbackText = "";
 
 
 // --------------- Append Elements -------------------------------
@@ -40,7 +44,6 @@ rightWrongParagraph = "";
 
 
 // --------------- FUNCTIONS -------------------------------------
-
 
 // Transition from start-screen to screen with questions
 const displayQuestionScreen = () => {
@@ -59,12 +62,56 @@ const createCountDown = () => {
     }
 }
 
+// Populate #questions div with current question and options
+const generateOptions = (question) => {
+    question.answers.forEach(option => {
+        let listItem = document.createElement("li")
+        let optionBtn = document.createElement("button");
+        optionBtn.innerText = `${question.answers.indexOf(option) + 1}. ${option}`;
+        listItem.append(optionBtn);
+        list.append(listItem);
+        answerDiv.append(list);
+    });
+}
+const generateQuestion = (question) => {
+    questionTitle.textContent = question.title;
+}
+
+
 // Regroup functions needed for the quiz to start
 const startQuiz = () => {
     const launchCountDown = setInterval(createCountDown, 1000);
     displayQuestionScreen();
+    
+    //test
+    generateQuestion(questions[0]);
+    generateOptions(questions[0])
+
 }
 
 
 // --------------- MAIN ------------------------------------------
-startBtn.addEventListener("click", startQuiz)
+startBtn.addEventListener("click", startQuiz);
+
+
+
+
+
+
+
+// const populateQuestionsDiv = ()=> {
+    
+// }
+// questions.forEach(item => {
+    //     questionTitle.textContent = item.question;
+    //     console.log("question answers")
+    //     console.log(item.answers)
+       
+    
+    // });
+ // questions.forEach(question =>{
+    //     let answerBtn = document.createElement("button");
+    //     answerBtn.classList.add("answer");
+    //     answerBtn.innerText = "TESTING" 
+    //     questionsDiv.appendChild(answerBtn);
+    // })

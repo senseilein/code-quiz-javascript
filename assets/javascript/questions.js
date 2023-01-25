@@ -1,12 +1,8 @@
 let questions = [
     {
-        question:"Commonly used data types DO NOT includes:",
-        answers: {
-            a: "strings",
-            b: "booleans",
-            correctAnswer: "alerts",
-            c: "numbers"
-        }
+        title:"Commonly used data types DO NOT includes:",
+        answers: ["strings", "alerts", "booleans", "numbers"],
+        correctAnswer: "alerts" 
     },
     {
         question:"The condition in an if/else statement is enclosed within _______:",

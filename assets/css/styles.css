@@ -44,14 +44,19 @@ ol {
   overflow: auto;
 }
 
-li {
+/* li {
   padding: 5px;
   list-style: decimal inside none;
+} */
+
+li {
+  padding: 5px;
+  list-style: none;
 }
 
-li:nth-child(odd) {
+/* li:nth-child(odd) {
   background-color: #f3edfc;
-}
+} */
 
 .wrapper {
   margin: 100px auto 0 auto;
