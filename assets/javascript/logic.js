@@ -48,10 +48,11 @@ const displayQuestionScreen = () => {
 
 // Implementation of the count down to be used in the setInterval()
 const createCountDown = () => {
-    if(timer >= 0){
+    if(timer > 0){
     time.textContent = timer;
     timer--;
     } else {
+        time.textContent = 0;
         clearInterval(createCountDown);
     }
 }
