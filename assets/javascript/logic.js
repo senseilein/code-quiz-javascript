@@ -63,6 +63,10 @@ const createCountDown = () => {
 }
 
 // Populate #questions div with current question and options
+// We will then loop through the questions array to capture each question object individually
+const generateQuestion = (question) => {
+    questionTitle.textContent = question.title;
+}
 const generateOptions = (question) => {
     question.answers.forEach(option => {
         let listItem = document.createElement("li")
@@ -73,16 +77,13 @@ const generateOptions = (question) => {
         answerDiv.append(list);
     });
 }
-const generateQuestion = (question) => {
-    questionTitle.textContent = question.title;
-}
 
 
 // Regroup functions needed for the quiz to start
 const startQuiz = () => {
     const launchCountDown = setInterval(createCountDown, 1000);
     displayQuestionScreen();
-    
+
     //test
     generateQuestion(questions[0]);
     generateOptions(questions[0])
@@ -92,26 +93,3 @@ const startQuiz = () => {
 
 // --------------- MAIN ------------------------------------------
 startBtn.addEventListener("click", startQuiz);
-
-
-
-
-
-
-
-// const populateQuestionsDiv = ()=> {
-    
-// }
-// questions.forEach(item => {
-    //     questionTitle.textContent = item.question;
-    //     console.log("question answers")
-    //     console.log(item.answers)
-       
-    
-    // });
- // questions.forEach(question =>{
-    //     let answerBtn = document.createElement("button");
-    //     answerBtn.classList.add("answer");
-    //     answerBtn.innerText = "TESTING" 
-    //     questionsDiv.appendChild(answerBtn);
-    // })
