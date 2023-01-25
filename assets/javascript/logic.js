@@ -27,7 +27,9 @@ let startScreen = document.getElementById("start-screen");
 
 // On #questions screen
 let questionsDiv = document.getElementById("questions");
-
+let questionTitle = document.getElementById("question-title");
+let answerDiv = document.getElementById("choices");
+let answers = document.getElementsByClassName("choices");
 
 // --------------- Add content to Elements -----------------------
 rightWrongParagraph = "";
