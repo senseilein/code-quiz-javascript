@@ -83,13 +83,14 @@ const generateOptions = (question) => {
 const startQuiz = () => {
     const launchCountDown = setInterval(createCountDown, 1000);
     displayQuestionScreen();
-
-    //test
-    generateQuestion(questions[0]);
-    generateOptions(questions[0])
-
 }
 
+const populateQuiz = () => {
+        //test
+    generateQuestion(questions[0]);
+    generateOptions(questions[0])
+}
 
 // --------------- MAIN ------------------------------------------
 startBtn.addEventListener("click", startQuiz);
+populateQuiz()

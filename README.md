@@ -1,88 +1,97 @@
-# Module 6 Challenge Web APIs: Code Quiz
+# CODE QUIZ - JAVASCRIPT
 
-## Your Task
+![](https://img.shields.io/badge/html-HTML5-orange?logo=html5)
+![](https://img.shields.io/badge/css-CSS3-%231572B6?logo=css3)
+![](https://img.shields.io/badge/JavaScript-grey?logo=javascript)
+![](https://img.shields.io/github/license/senseilein/code-quiz-javascript)
 
-As you proceed in your journey to becoming a front-end web developer, it’s likely that you’ll be asked to complete a coding assessment, perhaps as part of an interview process. A typical coding assessment is a combination of multiple-choice questions and interactive coding challenges. 
+## 🚩 TABLE OF CONTENT
 
-To help you become familiar with these tests and give you a chance to apply the skills from this module, this week’s challenge invites you to build a timed coding quiz with multiple-choice questions. This app will run in the browser, and will feature dynamically updated HTML and CSS powered by JavaScript code that you write. It will have a clean, polished, and responsive user interface. This week’s coursework has taught you all the skills you need to succeed in this challenge.
- 
+- [Description](#-description)
+- [Usage](#-usage)
+- [Technology used](#-technology-used)
+- [Installation](#-installation)
+- [Credits](#-credits)
+- [License](#-license)
 
-## User Story
+## 📖 DESCRIPTION
+
+### 🎯 What is it about?
+
+- A timed coding quiz with multiple-choice questions about JavaScript
+- This app will run in the browser, and will feature dynamically updated HTML and CSS powered by JavaScript.
+- It has a clean, polished, and responsive user interface.
+
+### Preview
+
+The following image shows the web application's appearance and functionality:
+![Javascript Quiz](./assets/images/08-web-apis-challenge-demo.gif)
+
+## 💻 USAGE
+
+[Visit the webpage here](https://senseilein.github.io/code-quiz-javascript)
+
+This app runs in the browser and feature dynamically updated HTML and CSS (provided starter code) powered by JavaScript code that I've written. It has a clean and polished user interface that is responsive, ensuring that it adapts to multiple screen sizes.
+
+### 💬 User story
 
 ```
 AS A coding boot camp student
 I WANT to take a timed quiz on JavaScript fundamentals that stores high scores
-SO THAT I can gauge my progress compared to my peers
+SO THAT I can gauge my progress compared to when I started my learning journey
 ```
 
-## Acceptance Criteria
+```
+GIVEN the Quiz app
 
-Create a code quiz that contains the following requirements:
+WHEN the user clicks on the "start" button,
+THEN a timer starts and the first question appears
 
-* A start button that when clicked a timer starts and the first question appears.
- 
-  * Questions contain buttons for each answer.
-  * 
-  * When answer is clicked, the next question appears
-  * 
-  * If the answer clicked was incorrect then subtract time from the clock
+WHEN the user clicks on an answer,
+THEN the next question appears
 
-* The quiz should end when all questions are answered or the timer reaches 0.
+WHEN the answer clicked is incorrect
+THEN 10 seconds are substracted from the timer
 
-  * When the game ends, it should display their score and give the user the ability to save their initials and their score
-  
-## Mock-Up
+WHEN the game ends,
+THEN the user can save their initials and score
 
-The following animation demonstrates the application functionality:
+```
 
-![Animation of code quiz. Presses button to start quiz. Clicks the button for the answer to each question, displays if answer was correct or incorrect. Quiz finishes and displays high scores. User adds their intials, then clears their intials and starts over.](./assets/08-web-apis-challenge-demo.gif)
+### ✅ Acceptance Criteria
 
-## Grading Requirements
+It's done when:
 
-This challenge is graded based on the following criteria: 
+- [ ] questions are dynamically generated using JavaScript
+- [ ] questions contain buttons for each answer
+- [ ] the quiz end when all questions are answered or timer reaches 0
+- [ ] the app uses local storage to save users' scores along with their initials
+- [ ] the user gets a visual and sonot feedback after answering each question
+- [ ] the highest scores (with associated initials) are available on a different html page
 
-### Technical Acceptance Criteria: 40%
+## 🔧 TECHNOLOGY USED
 
-* Satisfies all of the above acceptance criteria.
+- Starter code: HTML and CSS
+- I worked on : JavaScript
 
-### Deployment: 32%
+### 💡 What I've learnt
 
-* Application deployed at live URL.
+- How to dynamically generate content on a webpage using Javascript
+- the importance of local storage
+- introduction to JSON
 
-* Application loads with no errors.
+### ➕ Suggestions for improvement
 
-* Application GitHub URL submitted.
+- Add
 
-* GitHub repository that contains application code.
+## 🚀 INSTALLATION
 
-### Application Quality: 15%
+No installation needed.
 
-* Application user experience is intuitive and easy to navigate.
+## 💬 CREDITS
 
-* Application user interface style is clean and polished.
+- This project was created as part of a coding assignment with [Trilogy Education Services](https://skillsforlife.edx.org/?utm_source=govuk)
 
-* Application resembles the mock-up functionality provided in the challenge instructions.
+## 📜 LICENSE
 
-### Repository Quality: 13%
-
-* Repository has a unique name.
-
-* Repository follows best practices for file structure and naming conventions.
-
-* Repository follows best practices for class/id naming conventions, indentation, quality comments, etc.
-
-* Repository contains multiple descriptive commit messages.
-
-* Repository contains quality README file with description, screenshot, and link to deployed application.
-
-
-## Review
-
-You are required to submit BOTH of the following for review:
-
-* The URL of the functional, deployed application.
-
-* The URL of the GitHub repository. Give the repository a unique name and include a README describing the project.
-
----
-© 2023 edX Boot Camps LLC. Confidential and Proprietary. All Rights Reserved.
+This repository is licensed under the MIT license.
