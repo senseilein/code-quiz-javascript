@@ -10,14 +10,18 @@
 
 // --------------- DATA ------------------------------------------
 let timer = 59;
-let currentScore;
+let currentScore = 0;
+let currentQuestion = {};
 
 // --------------- Create elements that we will need -------------
 
 // For feedbackText after each question
-let feedbackText = document.createElement("p");
+let correctFeedbackText = document.createElement("p");
+let wrongFeedbackText = document.createElement("p");
 let horizontalLine = document.createElement("hr");
-let list = document.createElement("ul");
+
+// To display answer options
+let listOfOptions = document.createElement("ul");
 
 // --------------- Select Elements -------------------------------
 
@@ -32,7 +36,8 @@ let questionTitle = document.getElementById("question-title");
 let answerDiv = document.getElementById("choices");
 
 // --------------- Add content to Elements -----------------------
-feedbackText = "";
+correctFeedbackText.innerText = "Correct!";
+wrongFeedbackText.innerText = "Wrong!";
 
 // --------------- Append Elements -------------------------------
 
@@ -50,7 +55,7 @@ const createCountDown = () => {
     time.textContent = timer;
     timer--;
   } else {
-    time.textContent = 0;
+    time.textContent = 00;
     clearInterval(createCountDown);
   }
 };
@@ -67,10 +72,50 @@ const generateOptions = (question) => {
     let listItem = document.createElement("li");
     let optionBtn = document.createElement("button");
     listItem.innerText = option;
+    listItem.className =
+      listItem.innerText === question.correctAnswer ? "correct" : "wrong";
     optionBtn.append(listItem);
-    list.append(optionBtn);
-    answerDiv.append(list);
+    listOfOptions.append(optionBtn);
+    answerDiv.append(listOfOptions);
   });
+};
+
+const generateFeedback = (feedbackText) => {
+  answerDiv.appendChild(horizontalLine);
+  answerDiv.appendChild(feedbackText);
+};
+
+// Not correct
+// const disableAnswersAfterFeedback = () => {
+//   // remove classes so that nothing happens if user clicks again
+//   // const listItemWithClass = document.querySelectorAll("li");
+//   listItemWithClass.classList.remove("wrong", "correct");
+// };
+
+// Event delegation
+const validateUserAnswer = () => {
+  questionsDiv.addEventListener("click", function (event) {
+    let target = event.target;
+    if (target.className === "correct") {
+      console.log("yeah " + target.textContent);
+      generateFeedback(correctFeedbackText);
+      currentScore++;
+      console.log("current score " + currentScore);
+      return true;
+    } else if (target.className === "wrong") {
+      console.log(" NO wrong! " + target.textContent);
+      generateFeedback(wrongFeedbackText);
+      timer -= 10;
+      return false;
+    } else {
+      console.log("meh");
+    }
+  });
+};
+
+const clearQuestion = () => {
+  questionTitle.textContent = "";
+  answerDiv.removeChild(listOfOptions);
 };
 
 // Regroup functions needed for the quiz to start
@@ -86,5 +131,15 @@ const populateQuiz = () => {
 };
 
 // --------------- MAIN ------------------------------------------
+
 startBtn.addEventListener("click", startQuiz);
+
+/* For each question, we will 
+- populate the quiz then clear it once user clicked the correct target 
+> do this as long as there are questions available
+
+*/
 populateQuiz();
+validateUserAnswer(); // and display feedback
+//disableAnswersAfterFeedback();
+// clearQuestion();
