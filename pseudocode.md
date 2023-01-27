@@ -57,43 +57,40 @@
                     * CREATE a <ul> in which we will append 4 <li> wrapped in <button>
                     * ASSIGN each <li> in the questionDiv the value of each item in currentQuestion.answers
                     * ADD class "wrong" to the wrong answers and "correct" to the correct ones, and "answers" to all of those buttons (so that we can disable them as soon as we get a valid click)
-                c. disableAnswers()
-                    * GET all elements with "answers" class
+                <!-- c. disableAnswers()  / this might not be needed if we manage to change question immediately after click-->
+                    <!-- * GET all button with "answers" class -->
+                    <!-- * SET their "disabled" property to true -->
 
             2. function validateUserAnswer()
-                * LISTEN for 'click' event on questionsDiv
+                * LISTEN for 'click' event on questionDiv
                 * IF user clicks on a button:
-                    IF that button.textContent is the same as that question.correctAnswer
-                        * score++
-                        >> Will need to create a function for that:
-                        * UPDATE feedbackText with textContent "Right"
-                        * APPEND it to questionsDiv alongside with horizontalLine (for 1 or 2 seconds)
+                    * IF that button.innerText is the same as that currentQuestion.correctAnswer
+                        * currentScore++
+                        <!-- Will need to create a function for the following: -->
+                        * UPDATE feedbackText with textContent "Correct!"
+                        * APPEND it to questionDiv alongside with horizontalLine (for 1 or 2 seconds)
 
                     ELSE (if user clicks on any wrong answer buttons)
                         * time -= 10
                         >> Will need to create a function for that:
-                        * UPDATE feedbackText with textContent "Right"
-                        * APPEND it to questionsDiv alongside with horizontalLine
+                        * UPDATE feedbackText with textContent "Wrong!"
+                        * APPEND it to questionDiv alongside with horizontalLine
 
-                * IF time is still > 0:
-                    * THEN REPEAT generateQuestion() (as long as there are questions in the array) and validateUserAnswer()
-                  ELSE
-                    CLEAR textContent of all the above elements (h2 ="", buttons="" and time = 0).
+#### STEP 2 - QUIZ IS OVER WHEN TIME === 0 OR NO QUESTIONS AVAILABLE
 
-#### STEP 2 - QUIZ IS OVER
+<!-- Might need to use a switch statement for time -->
 
-        IF we read all the questions (reach the end of the questions array)
-            * STOP time
-            * DISPLAY the correct div
-                * CHANGE class of div #questions to hide
-                * CHANGE class of div #end-screen so it's visible
-        OR
+    IF time <= 0:
+        * ASSIGN `time` the value of 00
+        * HIDE the questionDiv and display the endScreen > add a class of "hide" to questionDiv.classList and remove the class of "hide" to endScreen.classList
 
-        IF time <= 0
-            * UPDATE time to 0
-            * DISPLAY the correct div
-                * CHANGE class of div #questions to hide
-                * CHANGE class of div #end-screen so it's visible
+       ELSE (IF time is still > 0):
+            IF there are still questions available in the questions array:
+                * THEN REPEAT step 2 with the following question (generate the next question and associated answer)
+       ELSE:
+            * STOP timer
+            * HIDE the questionDiv and display the endScreen
+                * ADD a class of "hide" to questionDiv.classList * * REMOVE the class of "hide" to endScreen.classList
 
 ### NOW ON DIV #end-screen (need to develop)
 
