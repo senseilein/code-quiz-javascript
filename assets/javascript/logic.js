@@ -31,9 +31,12 @@ let time = document.getElementById("time");
 let startScreen = document.getElementById("start-screen");
 
 // On #questions screen
-let questionsDiv = document.getElementById("questions");
+let questionDiv = document.getElementById("questions");
 let questionTitle = document.getElementById("question-title");
 let answerDiv = document.getElementById("choices");
+
+// On #end-screen
+let endScreen = document.getElementById("end-screen");
 
 // --------------- Add content to Elements -----------------------
 correctFeedbackText.innerText = "Correct!";
@@ -46,7 +49,7 @@ wrongFeedbackText.innerText = "Wrong!";
 // Transition from start-screen to screen with questions
 const displayQuestionScreen = () => {
   startScreen.classList.add("hide");
-  questionsDiv.classList.remove("hide");
+  questionDiv.classList.remove("hide");
 };
 
 // Implementation of the count down to be used in the setInterval()
@@ -94,7 +97,7 @@ const generateFeedback = (feedbackText) => {
 
 // Event delegation
 const validateUserAnswer = () => {
-  questionsDiv.addEventListener("click", function (event) {
+  questionDiv.addEventListener("click", function (event) {
     let target = event.target;
     if (target.className === "correct") {
       console.log("yeah " + target.textContent);
@@ -130,6 +133,12 @@ const populateQuiz = () => {
   generateOptions(questions[0]);
 };
 
+const endQuiz = () => {
+  startScreen.classList.add("hide");
+  questionDiv.classList.add("hide");
+  endScreen.classList.remove("hide");
+};
+
 // --------------- MAIN ------------------------------------------
 
 startBtn.addEventListener("click", startQuiz);
@@ -143,3 +152,5 @@ populateQuiz();
 validateUserAnswer(); // and display feedback
 //disableAnswersAfterFeedback();
 // clearQuestion();
+
+// endQuiz();
