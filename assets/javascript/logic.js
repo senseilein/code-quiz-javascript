@@ -1,7 +1,6 @@
 // --------------- DATA ------------------------------------------
 let timer = 59;
 let currentScore = 0;
-let currentQuestion;
 
 // --------------- Create elements that we will need -------------
 
@@ -27,6 +26,8 @@ const answerDiv = document.getElementById("choices");
 
 // On #end-screen
 const endScreen = document.getElementById("end-screen");
+const initialsInput = document.getElementById("initials");
+const submitBtn = document.getElementById("submit");
 
 let questionIndex = 0;
 
@@ -49,12 +50,13 @@ const createCountDown = () => {
   } else {
     time.textContent = 00;
     clearInterval(createCountDown);
+    endQuiz();
   }
 };
 
 // Regroup functions needed for the quiz to start
 const startQuiz = () => {
-  const launchCountDown = setInterval(createCountDown, 1000);
+  setInterval(createCountDown, 1000);
   displayQuestionScreen();
   populateQuiz();
 };
@@ -101,10 +103,18 @@ const generateFeedback = (feedbackText) => {
 };
 
 const handleAnswer = () => {
-  questionTitle.textContent = "";
+  if (questionIndex >= questions.length - 1) {
+    currentScore = timer;
+    return endQuiz();
+  }
+
   questionIndex++;
   listOfOptions.textContent = "";
-  populateQuiz();
+
+  setTimeout(() => {
+    questionTitle.textContent = "";
+    populateQuiz();
+  }, 1000);
 };
 
 // Event delegation
@@ -114,14 +124,12 @@ const validateUserAnswer = () => {
 
     if (target.className === "correct") {
       generateFeedback("Correct!");
-      currentScore++;
       handleAnswer();
       return true;
     } else if (target.className === "wrong") {
       generateFeedback("Wrong!");
       timer -= 10;
       handleAnswer();
-
       return false;
     }
   });
@@ -132,6 +140,11 @@ const populateQuiz = () => {
   generateOptions(questions[questionIndex]);
 };
 
+const submitScore = () => {
+  const userInitials = initialsInput.value;
+  console.log(userInitials, "-", currentScore);
+};
+
 const endQuiz = () => {
   startScreen.classList.add("hide");
   questionScreen.classList.add("hide");
@@ -139,7 +152,7 @@ const endQuiz = () => {
 };
 
 // --------------- EVENT LISTENERS ------------------------------------------
+validateUserAnswer();
 
 startBtn.addEventListener("click", startQuiz);
-
-validateUserAnswer();
+submitBtn.addEventListener("click", submitScore);
