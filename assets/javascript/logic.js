@@ -1,5 +1,6 @@
 // --------------- DATA ------------------------------------------
 let timer = 59;
+let questionIndex = 0;
 let currentScore = 0;
 
 // --------------- Create elements that we will need -------------
@@ -29,47 +30,58 @@ const endScreen = document.getElementById("end-screen");
 const initialsInput = document.getElementById("initials");
 const submitBtn = document.getElementById("submit");
 
-let questionIndex = 0;
-
 // --------------- Append Elements -------------------------------
 
 // --------------- FUNCTIONS -------------------------------------
 
 /*------- START -------*/
+
+// Put empty array in localStorage if there's nothing there
+const init = () => {
+  const highScores = JSON.parse(localStorage.getItem("highscores"));
+  if (!highScores) {
+    localStorage.setItem("highscores", JSON.stringify([]));
+  }
+};
+
+init();
+
 // Transition from start-screen to screen with questions (questionScreen)
 const displayQuestionScreen = () => {
   startScreen.classList.add("hide");
   questionScreen.classList.remove("hide");
 };
 
-// Implementation of the count down to be used in the setInterval()
-const createCountDown = () => {
+// Implementation of the countdown to be used for the timer (in startQuiz function)
+const setCountDown = () => {
   if (timer > 0) {
     time.textContent = timer;
     timer--;
   } else {
     time.textContent = 00;
-    clearInterval(createCountDown);
+    clearInterval(setCountDown);
     endQuiz();
   }
 };
 
 // Regroup functions needed for the quiz to start
 const startQuiz = () => {
-  setInterval(createCountDown, 1000);
+  setInterval(setCountDown, 1000);
   displayQuestionScreen();
   populateQuiz();
 };
 
-/*------- QUESTION -------*/
-// Populate #questions div with current question and options
-// We will then loop through the questions array to capture each question object individually
+/*------- QUESTIONS -------*/
+// Populate #questions div with current question (based on questionIndex) and corresponding options
+// No need to loop through the questions array to capture each question object individually
+// since in handleAnswer() we increment questionIndex after each question (as long as we haven't reached the last one)
 
-const generateQuestion = (question) => {
+const generateQuestionTitle = (question) => {
   questionTitle.textContent = question.title;
 };
 
-// Answers will be displayed as list items inside buttons
+// Answers will be displayed as list items inside buttons (answerDiv > listOfOptions > optionBtn > listItem)
+// and all of them will have a class of "wrong" except the correct one, which will have a class of "correct"
 const generateOptions = (question) => {
   question.answers.forEach((option) => {
     let listItem = document.createElement("li");
@@ -80,24 +92,29 @@ const generateOptions = (question) => {
     optionBtn.append(listItem);
     listOfOptions.append(optionBtn);
     answerDiv.append(listOfOptions);
+    console.log(optionBtn.textContent);
   });
 };
 
-const clearFeedback = () => {
-  answerDiv.removeChild(horizontalLine);
+const populateQuiz = () => {
+  generateQuestionTitle(questions[questionIndex]);
+  generateOptions(questions[questionIndex]);
+};
 
-  // target already existing text div, created in the parent function and remove it
+const clearFeedback = () => {
+  // target already existing text div created in the parent function and remove it
   const feedbackText = document.getElementById("feedback-div");
   answerDiv.removeChild(feedbackText);
 };
 
 const generateFeedback = (feedbackText) => {
-  answerDiv.appendChild(horizontalLine);
-
   // create text div and append it to the container
   const feedbackDiv = document.createElement("div");
+  const feedbackWord = document.createElement("p");
+  feedbackWord.textContent = feedbackText;
   feedbackDiv.setAttribute("id", "feedback-div");
-  feedbackDiv.innerText = feedbackText;
+  feedbackDiv.appendChild(horizontalLine);
+  feedbackDiv.appendChild(feedbackWord);
   answerDiv.appendChild(feedbackDiv);
   setTimeout(clearFeedback, 1000);
 };
@@ -122,6 +139,7 @@ const validateUserAnswer = () => {
   questionScreen.addEventListener("click", function (event) {
     let target = event.target;
 
+    // valid clicks are only those on the answers
     if (target.className === "correct") {
       generateFeedback("Correct!");
       handleAnswer();
@@ -135,14 +153,19 @@ const validateUserAnswer = () => {
   });
 };
 
-const populateQuiz = () => {
-  generateQuestion(questions[questionIndex]);
-  generateOptions(questions[questionIndex]);
-};
+// function to get the arr from ls
+// push the object with the user name and score
+// put the arr back in LS
 
 const submitScore = () => {
   const userInitials = initialsInput.value;
-  console.log(userInitials, "-", currentScore);
+  let highScores = JSON.parse(localStorage.getItem("highscores"));
+
+  const userHighscore = { userInitials, currentScore };
+
+  highScores.push(userHighscore);
+
+  localStorage.setItem("highscores", JSON.stringify(highScores));
 };
 
 const endQuiz = () => {
