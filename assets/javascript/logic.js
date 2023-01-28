@@ -105,8 +105,8 @@ const populateQuiz = () => {
 const clearFeedback = () => {
   // target already existing text div created in the parent function and remove it
   const feedbackText = document.getElementById("feedback-div");
-  answerDiv.removeChild(feedbackText);
-  //questionScreen.removeChild(feedbackText);
+  // answerDiv.removeChild(feedbackText);
+  questionScreen.removeChild(feedbackText);
 };
 
 const generateFeedback = (feedbackText) => {
@@ -118,10 +118,7 @@ const generateFeedback = (feedbackText) => {
   feedbackDiv.appendChild(horizontalLine);
   feedbackDiv.appendChild(feedbackWord);
   answerDiv.appendChild(feedbackDiv);
-  // Come back to this later> to correct display of feedback, maybe clearfeedback after populating next questions.option
-  // answerDiv.after(feedbackDiv);
-  // console.log("yeah " + feedbackDiv.parentElement);
-  setTimeout(clearFeedback, 1000);
+  answerDiv.after(feedbackDiv);
 };
 
 const handleAnswer = () => {
@@ -133,10 +130,9 @@ const handleAnswer = () => {
   questionIndex++;
   listOfOptions.textContent = "";
 
-  setTimeout(() => {
-    questionTitle.textContent = "";
-    populateQuiz();
-  }, 1000);
+  questionTitle.textContent = "";
+  populateQuiz();
+  setTimeout(clearFeedback, 1000);
 };
 
 // Event delegation
