@@ -26,6 +26,7 @@ const questionTitle = document.getElementById("question-title");
 const answerDiv = document.getElementById("choices");
 
 // On #end-screen
+const finalScore = document.getElementById("final-score");
 const endScreen = document.getElementById("end-screen");
 const initialsInput = document.getElementById("initials");
 const submitBtn = document.getElementById("submit");
@@ -89,9 +90,9 @@ const generateOptions = (question) => {
     listItem.innerText = option;
     listItem.className =
       listItem.innerText === question.correctAnswer ? "correct" : "wrong";
-    optionBtn.append(listItem);
-    listOfOptions.append(optionBtn);
-    answerDiv.append(listOfOptions);
+    optionBtn.appendChild(listItem);
+    listOfOptions.appendChild(optionBtn);
+    answerDiv.appendChild(listOfOptions);
     console.log(optionBtn.textContent);
   });
 };
@@ -105,6 +106,7 @@ const clearFeedback = () => {
   // target already existing text div created in the parent function and remove it
   const feedbackText = document.getElementById("feedback-div");
   answerDiv.removeChild(feedbackText);
+  //questionScreen.removeChild(feedbackText);
 };
 
 const generateFeedback = (feedbackText) => {
@@ -116,6 +118,9 @@ const generateFeedback = (feedbackText) => {
   feedbackDiv.appendChild(horizontalLine);
   feedbackDiv.appendChild(feedbackWord);
   answerDiv.appendChild(feedbackDiv);
+  // Come back to this later> to correct display of feedback, maybe clearfeedback after populating next questions.option
+  // answerDiv.after(feedbackDiv);
+  // console.log("yeah " + feedbackDiv.parentElement);
   setTimeout(clearFeedback, 1000);
 };
 
@@ -171,6 +176,7 @@ const submitScore = () => {
 const endQuiz = () => {
   startScreen.classList.add("hide");
   questionScreen.classList.add("hide");
+  finalScore.textContent = currentScore;
   endScreen.classList.remove("hide");
 };
 
