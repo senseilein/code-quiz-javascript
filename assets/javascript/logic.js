@@ -1,5 +1,5 @@
 // --------------- DATA ------------------------------------------
-let timer = 29;
+let timeLeft = 29;
 let questionIndex = 0;
 let currentScore = 0;
 
@@ -53,16 +53,25 @@ const displayQuestionScreen = () => {
   questionScreen.classList.remove("hide");
 };
 
-// Implementation of the countdown to be used for the timer (in startQuiz function)
+// Implementation of the countdown to be used for the timeLeft (in startQuiz function)
 const setCountDown = () => {
-  if (timer > 0) {
-    time.textContent = timer;
-    timer--;
+  if (timeLeft > 0) {
+    if (questionIndex >= questions.length - 1) {
+      clearInterval(setCountDown);
+      // Why infinite Loop?
+      console.log("timeleft" + timeLeft);
+      console.log("score " + currentScore);
+      return;
+    } else {
+      time.textContent = timeLeft;
+      timeLeft--;
+    }
   } else {
     time.textContent = "00";
     clearInterval(setCountDown);
     endQuiz();
   }
+  return;
 };
 
 // Regroup functions needed for the quiz to start
@@ -70,6 +79,7 @@ const startQuiz = () => {
   setInterval(setCountDown, 1000);
   displayQuestionScreen();
   populateQuiz();
+  return;
 };
 
 /*------- QUESTIONS -------*/
@@ -122,7 +132,7 @@ const generateFeedback = (feedbackText) => {
 
 const handleAnswer = () => {
   if (questionIndex >= questions.length - 1) {
-    currentScore = timer;
+    currentScore = timeLeft;
     return endQuiz();
   }
 
@@ -146,7 +156,7 @@ const validateUserAnswer = () => {
       return true;
     } else if (target.className === "wrong") {
       generateFeedback("Wrong!");
-      timer -= 10;
+      timeLeft -= 10;
       handleAnswer();
       return false;
     }
@@ -172,6 +182,7 @@ const submitScore = () => {
 };
 
 const endQuiz = () => {
+  clearInterval(setCountDown);
   startScreen.classList.add("hide");
   questionScreen.classList.add("hide");
   finalScore.textContent = currentScore;
