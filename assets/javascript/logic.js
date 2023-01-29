@@ -1,5 +1,5 @@
 // --------------- DATA ------------------------------------------
-let timer = 59;
+let timer = 29;
 let questionIndex = 0;
 let currentScore = 0;
 
@@ -59,7 +59,7 @@ const setCountDown = () => {
     time.textContent = timer;
     timer--;
   } else {
-    time.textContent = 00;
+    time.textContent = "00";
     clearInterval(setCountDown);
     endQuiz();
   }
@@ -105,7 +105,6 @@ const populateQuiz = () => {
 const clearFeedback = () => {
   // target already existing text div created in the parent function and remove it
   const feedbackText = document.getElementById("feedback-div");
-  // answerDiv.removeChild(feedbackText);
   questionScreen.removeChild(feedbackText);
 };
 
@@ -135,7 +134,7 @@ const handleAnswer = () => {
   setTimeout(clearFeedback, 1000);
 };
 
-// Event delegation
+// Event delegation - only take into account clicks on buttons
 const validateUserAnswer = () => {
   questionScreen.addEventListener("click", function (event) {
     let target = event.target;
@@ -154,17 +153,20 @@ const validateUserAnswer = () => {
   });
 };
 
-// function to get the arr from ls
-// push the object with the user name and score
+// function to get the arr from localStorage
+// push the object with the user initials and score
 // put the arr back in LS
 
 const submitScore = () => {
-  const userInitials = initialsInput.value;
+  const currentUserInitials = initialsInput.value;
+  // get array of highscores objects
   let highScores = JSON.parse(localStorage.getItem("highscores"));
+  console.log(highScores);
+  //create an object to store userInitials
+  const currentUserHighscore = { currentUserInitials, currentScore };
 
-  const userHighscore = { userInitials, currentScore };
-
-  highScores.push(userHighscore);
+  // Add current user's details to the highscores array
+  highScores.push(currentUserHighscore);
 
   localStorage.setItem("highscores", JSON.stringify(highScores));
 };
@@ -176,8 +178,8 @@ const endQuiz = () => {
   endScreen.classList.remove("hide");
 };
 
-// --------------- EVENT LISTENERS ------------------------------------------
-validateUserAnswer();
+// --------------- FLOW / EVENT LISTENERS ------------------------------------------
 
 startBtn.addEventListener("click", startQuiz);
+validateUserAnswer();
 submitBtn.addEventListener("click", submitScore);
